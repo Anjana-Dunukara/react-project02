@@ -2,6 +2,7 @@ import Card from "../UI/Card";
 import styles from "./AddUser.module.css";
 import Button from "../Button/Button";
 import { useState } from "react";
+import ErrorModal from "../UI/ErrorModal";
 
 const AddUser = (props) => {
   const [userName, setUserName] = useState("");
@@ -15,7 +16,7 @@ const AddUser = (props) => {
     if (+age < 1) {
       return;
     }
-    console.log(userName, age);
+    props.onAddUser(userName, age);
     setUserName("");
     setAge("");
   };
@@ -29,24 +30,27 @@ const AddUser = (props) => {
   };
 
   return (
-    <Card className={styles.input}>
-      <form onSubmit={AddUserHandler}>
-        <label htmlFor="username">User Name</label>
-        <input
-          type="text"
-          value={userName}
-          onChange={changeNameHandler}
-        ></input>
-        <label htmlFor="age">Age(Years)</label>
-        <input
-          id="age"
-          value={age}
-          type="number"
-          onChange={changeAgeHandler}
-        ></input>
-        <Button />
-      </form>
-    </Card>
+    <div>
+      <ErrorModal title="Error" message="something went wrong!" />
+      <Card className={styles.input}>
+        <form onSubmit={AddUserHandler}>
+          <label htmlFor="username">User Name</label>
+          <input
+            type="text"
+            value={userName}
+            onChange={changeNameHandler}
+          ></input>
+          <label htmlFor="age">Age(Years)</label>
+          <input
+            id="age"
+            value={age}
+            type="number"
+            onChange={changeAgeHandler}
+          ></input>
+          <Button />
+        </form>
+      </Card>
+    </div>
   );
 };
 
